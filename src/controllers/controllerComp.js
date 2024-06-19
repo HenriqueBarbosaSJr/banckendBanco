@@ -3,18 +3,31 @@ const knex = require('../database/index');
 module.exports ={
 
     async createComp(req, res){
+        let respCliente;
         const {codcli}  = req.body;
         const { codpro }  = req.body;
         const { qtda }  = req.body;
         const { preco }  = req.body;
         
-        const respCliente = await knex('clientes')
+
+        if(codcli != '' && codpro != ''){
+            respCliente = await knex('clientes')
                             .where('codcli','=',codcli );
-       
+        }else{
+            return res.status(400).send(
+                {
+                    msg:'Código no cliente ou produto inexistente - antes da consulta !!!!'
+                }
+            ); 
+        } 
+        
+
         if (respCliente != '' ){
+
             const respProduto = await knex('produtos')
             .where('cod','=',codpro );
-            if (respProduto !=''){
+            if (respProduto !=''){1
+                
                 await knex('compras').insert({
                     codcli,
                     codpro,
@@ -29,7 +42,7 @@ module.exports ={
             }else{
                 return res.status(400).send(
                     {
-                        msg:'Código do produto errado !!!!'
+                        msg:'Código do produto inválido !!!!'
                     }
                 );
             }
@@ -38,7 +51,7 @@ module.exports ={
         }else{
             return res.status(400).send(
                 {
-                    msg:'Código no cliente errado !!!!'
+                    msg:'Código no cliente inexistente - Após a consulta!!!!'
                 }
             );
         }
