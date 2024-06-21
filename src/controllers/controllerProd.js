@@ -6,6 +6,11 @@ module.exports = {
         const result = await knex('produtos');
         return res.json(result);
     },
+    async prodsNome(req, res){
+        const { nome } = req.params;
+        const result = await knex('produtos').where('nome','like','%'+ nome +'%');
+        return res.json(result);
+    },
 
 
     

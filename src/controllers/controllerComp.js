@@ -45,12 +45,22 @@ module.exports ={
         }else{
             return res.status(400).send(
                 {
-                    msg:'Código no cliente inexistente - Após a consulta!!!!'
+                    msg:'Código do cliente inexistente - Após a consulta!!!!'
                 }
             );
         }
 
       
     },
+    async searchComp(req, res){
+        const result = await knex('compras');
+        return res.json(result);
+    },
+    async searchCompCod(req, res){
+        const { codcomp } = req.params;
+        const result = await knex('compras').where('codcomp','=',codcomp);
+
+        return res.json(result);
+    }
 
 }
