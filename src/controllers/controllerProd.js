@@ -1,39 +1,69 @@
 const knex = require('../database/index');
 
 module.exports = {
-
+    
     async prodsGeral(req, res){
-        const result = await knex('produtos');
-        return res.json(result);
+
+        try {
+            const result = await knex('produtosssss');
+            return res.json(result);
+        
+        } catch (error) {
+            return res.status(400).json({'error': error});
+        } 
+         
+
     },
+
+
     async prodsNome(req, res){
-        const { nome } = req.params;
-        const result = await knex('produtos').where('nome','like','%'+ nome +'%');
-        return res.json(result);
+
+        try {
+
+            const { nome } = req.params;
+            const result = await knex('produtos').where('nome','like','%'+ nome +'%');
+            return res.json(result);
+            
+        } catch (error) {
+            return res.status(400).json({'error': error});
+        }
+
+
+
     },
 
 
     
     async createProd(req, res){
-        const {nome}  = req.body;
-        const { descri }  = req.body;
-        const { fabricante }  = req.body;
-        const { qtda }  = req.body;
-        const { preco }  = req.body;
-        const { custo }  = req.body;
-        await knex('produtos').insert({
-            nome,
-            descri,
-            fabricante,
-            qtda,
-            preco,
-            custo
-        });
-        return res.status(201).send(
-            {
-                msg:'Cadastro efetuado com sucesso !!!!'
-            }
-        );
+
+        try {
+            const {nome}  = req.body;
+            const { descri }  = req.body;
+            const { fabricante }  = req.body;
+            const { qtda }  = req.body;
+            const { preco }  = req.body;
+            const { custo }  = req.body;
+            await knex('produtos').insert({
+                nome,
+                descri,
+                fabricante,
+                qtda,
+                preco,
+                custo
+            });
+            return res.status(201).send(
+                {
+                    msg:'Cadastro efetuado com sucesso !!!!'
+                }
+            );
+            
+        } catch (error) {
+            return res.status(400).json({'error': error});
+        }
+
+            
+
+       
     },
 
     async updateProd(req, res){
@@ -48,7 +78,7 @@ module.exports = {
         await knex('produtos').update({
             nome,
             descri,
-            fabricante,
+            fabricante, 
             qtda,
             preco,
             custo
