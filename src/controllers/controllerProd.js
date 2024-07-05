@@ -5,7 +5,7 @@ module.exports = {
     async prodsGeral(req, res){
 
         try {
-            const result = await knex('produtosssss');
+            const result = await knex('produtos');
             return res.json(result);
         
         } catch (error) {
@@ -60,9 +60,6 @@ module.exports = {
         } catch (error) {
             return res.status(400).json({'error': error});
         }
-
-            
-
        
     },
 
