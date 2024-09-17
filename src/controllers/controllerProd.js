@@ -43,6 +43,8 @@ module.exports = {
             const { qtda }  = req.body;
             const { preco }  = req.body;
             const { custo }  = req.body;
+            console.log(descri);
+            
             await knex('produtos').insert({
                 nome,
                 descri,
@@ -88,10 +90,12 @@ module.exports = {
     },
 
     async deleteProd(req, res){
-        const { cod } = req.params;
-
+        const { codpro } = req.params;
+        console.log(codpro);
+        
+        
         await knex('produtos')
-              .where({ cod })
+              .where({ codpro })
               .del();
         
         return res.status(201).send(

@@ -8,7 +8,7 @@ routes.get('/produtos', controllerProd.prodsGeral);
 routes.get('/produtosnome/:nome', controllerProd.prodsNome);
 routes.post('/produtos',controllerProd.createProd);
 routes.put('/produtos/:cod', controllerProd.updateProd);
-routes.delete('/produtos/:cod', controllerProd.deleteProd);
+routes.delete('/produtos/:codpro', controllerProd.deleteProd);
 
 // Rotas das compras
 
