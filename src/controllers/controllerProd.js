@@ -5,7 +5,7 @@ module.exports = {
     async prodsGeral(req, res){
 
         try {
-            const result = await knex('produtos');
+            const result = await knex('produtos').orderBy('codpro');
             return res.json(result);
         
         } catch (error) {
@@ -88,21 +88,22 @@ module.exports = {
             }
         );
     },
-
     async deleteProd(req, res){
         const { codpro } = req.params;
-        console.log(codpro);
-        
-        
-        await knex('produtos')
-              .where({ codpro })
-              .del();
-        
-        return res.status(201).send(
-                {
-                    msg:'Registro deletado com sucesso !!!!'
+        try {
+                const response = await knex('compras').where({codpro});
+                if (response.length!=0){
+                    return res.status(409).send({msg:'Registro não pode ser deletado, consta venda na tabela compras'});
+                    
+                }else{
+                    await knex('produtos')
+                    .where({ codpro })
+                    .del();
+                    return res.status(200).send({ msg:'Registro deletado com sucesso !!!!'});
                 }
-            );
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send({ msg: error });
+        }
      }
-    
 }
